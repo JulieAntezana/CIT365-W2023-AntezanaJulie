@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 // Your location (state or country)
 
 internal class MyFirstConsoleApplication
-{
+{ 
     private static void Main(string[] args)
     {
         var name = "Julie Antezana";
