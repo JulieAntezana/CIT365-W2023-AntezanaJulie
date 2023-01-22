@@ -8,13 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaDesk_1._0
+namespace MegaDesk_1._0.Properties
 {
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddQuote viewAddQuote = new AddQuote();
+            viewAddQuote.Tag = this;
+            viewAddQuote.Show(this);
+            this.Hide();
         }
     }
 }
