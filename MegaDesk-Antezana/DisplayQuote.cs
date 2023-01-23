@@ -21,6 +21,8 @@ namespace MegaDesk_Antezana
         public string material { get; set; }
         public string rushDays { get; set; }
 
+        public string QuoteTotalPrice { get; set; }
+
         public DisplayQuote()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace MegaDesk_Antezana
             label10.Text = drawers;
             label11.Text = material;
             label12.Text = rushDays;
+            label18.Text = "$ " + QuoteTotalPrice;
         }
 
         private void button2_Click(object sender, EventArgs e)
