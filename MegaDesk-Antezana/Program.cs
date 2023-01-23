@@ -1,11 +1,10 @@
-﻿using MegaDesk_1._0.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaDesk_1._0
+namespace MegaDesk_Antezana
 {
     internal static class Program
     {
@@ -17,7 +16,7 @@ namespace MegaDesk_1._0
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainMenu());
         }
     }
 }

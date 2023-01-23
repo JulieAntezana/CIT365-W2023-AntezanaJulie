@@ -1,6 +1,6 @@
-﻿namespace MegaDesk_1._0.Properties
+﻿namespace MegaDesk_Antezana
 {
-    partial class Form1
+    partial class MainMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -36,52 +36,53 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(56, 53);
+            this.button1.Location = new System.Drawing.Point(82, 56);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 43);
+            this.button1.Size = new System.Drawing.Size(132, 67);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Add New Quote";
+            this.button1.Text = "Add Quote";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(56, 102);
+            this.button2.Location = new System.Drawing.Point(82, 129);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 43);
+            this.button2.Size = new System.Drawing.Size(132, 67);
             this.button2.TabIndex = 0;
-            this.button2.Text = "View Quotes";
+            this.button2.Text = "Display Quote";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(56, 151);
+            this.button3.Location = new System.Drawing.Point(82, 202);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(126, 43);
+            this.button3.Size = new System.Drawing.Size(132, 67);
             this.button3.TabIndex = 0;
             this.button3.Text = "Search Quotes";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(56, 200);
+            this.button4.Location = new System.Drawing.Point(82, 275);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(126, 43);
+            this.button4.Size = new System.Drawing.Size(132, 67);
             this.button4.TabIndex = 0;
             this.button4.Text = "Exit";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // Form1
+            // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(396, 299);
+            this.ClientSize = new System.Drawing.Size(324, 395);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
-            this.Text = "Main Menu";
+            this.Name = "MainMenu";
+            this.Text = "Form1";
             this.ResumeLayout(false);
 
         }
@@ -94,3 +95,4 @@
         private System.Windows.Forms.Button button4;
     }
 }
+

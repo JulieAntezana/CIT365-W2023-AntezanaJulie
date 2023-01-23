@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MegaDesk_Antezana")]
+[assembly: AssemblyTitle("MegaDesk-Antezana")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MegaDesk_Antezana")]
+[assembly: AssemblyProduct("MegaDesk-Antezana")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("41fff5b8-e938-4315-8c97-2a042a0bf5f3")]
+[assembly: Guid("61dca929-f850-4aaa-9148-85aa8e37b3c2")]
 
 // Version information for an assembly consists of the following four values:
 //

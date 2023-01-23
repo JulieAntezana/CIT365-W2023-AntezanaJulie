@@ -8,21 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaDesk_1._0.Properties
+namespace MegaDesk_Antezana
 {
-    public partial class Form1 : Form
+    public partial class MainMenu : Form
     {
-        public Form1()
+        public MainMenu()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddQuote viewAddQuote = new AddQuote();
-            viewAddQuote.Tag = this;
-            viewAddQuote.Show(this);
+            AddQuote form = new AddQuote();
+            form.Show();
             this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
