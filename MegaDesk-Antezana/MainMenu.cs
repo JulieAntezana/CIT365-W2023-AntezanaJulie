@@ -12,21 +12,44 @@ namespace MegaDesk_Antezana
 {
     public partial class MainMenu : Form
     {
+        MainMenu mainMenu;
+        SearchQuotes searchQuotes;
+        AddQuote addQuote;
+        ViewAllQuotes viewAllQuotes;
+
         public MainMenu()
         {
             InitializeComponent();
+            addQuote = new AddQuote(this);
+            searchQuotes = new SearchQuotes(this);
+            viewAllQuotes = new ViewAllQuotes();
+            this.mainMenu = this;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddQuoteButton_Click(object sender, EventArgs e)
         {
-            AddQuote form = new AddQuote();
+            AddQuote form = new AddQuote(this);
             form.Show();
             this.Hide();
         }
+        private void SearchQuotesButton_Click(object sender, EventArgs e)
+        {
+            SearchQuotes form = new SearchQuotes(this);
+            form.Show();
+            this.Hide();
+        }        
 
-        private void button4_Click(object sender, EventArgs e)
+        private void ViewQuotesButton_Click(object sender, EventArgs e)
+        {
+            ViewAllQuotes form = new ViewAllQuotes();
+            form.Show();
+            this.Hide();
+        }        
+        private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+
     }
 }

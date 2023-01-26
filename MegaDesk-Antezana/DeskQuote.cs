@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
@@ -11,11 +13,13 @@ namespace MegaDesk_Antezana
     class DeskQuote
     {
         // Attributes
-        public DateTime QuoteDate;
+        public DateTime TodayDate;
         public string CustomerName;
         public Desk Desk = new Desk();
         public int RushDays;
+        public DateTime quoteDate;
         public int QuoteTotalPrice;
+        public int[,] extraCharges = new int[3, 3];
 
         // Constraints
         private const int BASE_PRICE = 200;
@@ -24,25 +28,25 @@ namespace MegaDesk_Antezana
         private const int AREA_PRICE_PER_IN = 1;
         private const int RUSH_THRESHOLD = 2000;
 
-        public DeskQuote(DateTime quoteDate, string customerName, int width, int depth, int drawers, Desk.Material material, int rushDays)
+        public string CurrentDate { get; }
+
+        public DeskQuote(DateTime quoteDate, string customerName, int width, int depth, int drawers, string material, int rushDays)
         {
-            QuoteDate = quoteDate;
+            TodayDate = quoteDate;
             CustomerName = customerName;
             Desk.width = width;
             Desk.depth = depth;
             Desk.drawers = drawers;
             Desk.deskMaterial = material;
             RushDays = rushDays;
-            
-
-
             Desk.surfaceArea = Desk.width * Desk.depth;
+            CalcQuoteTotalPrice();
         }
 
-        public int CalcQuoteTotalPrice()
+        public void CalcQuoteTotalPrice()
         {
-            QuoteTotalPrice = (BASE_PRICE + SurfaceAreaPrice() + DrawersPrice());
-            return QuoteTotalPrice;
+            // Calculate the quote total price for the desk
+            QuoteTotalPrice = (BASE_PRICE + SurfaceAreaPrice() + DrawersPrice() + MaterialPrice() + RushDaysPrice());
         }
 
         private int SurfaceAreaPrice()
@@ -64,45 +68,197 @@ namespace MegaDesk_Antezana
             return DrawersPrice;
         }
 
-        //private int MaterialPrice(Desk desk, DisplayQuote displayQuote)
-        //{
-        //    //if (displayQuote.label18.Text == "Oak" || "Laminate" || "Pine" || "Rosewood" || "Veneer")
+        private int MaterialPrice()
+        {
+            string material = Desk.deskMaterial;
+            int MaterialPrice = 0;
 
-        //    switch(displayQuote.label18.Text) {
-        //        case "Oak": MaterialPrice = Desk.Material.Oak; break;
-        //        case "Laminate": MaterialPrice = Desk.Material.Laminate; break;
-        //        case "Pine": MaterialPrice = Desk.Material.Pine; break;
-        //        case "Rosewood": MaterialPrice = Desk.Material.Rosewood; break;
-        //        case "Veneer": MaterialPrice = Desk.Material.Veneer; break;
-        //        default: MaterialPrice = 0; break;
+            switch (material)
+            {
+                case "Oak":
+                    MaterialPrice = 200;
+                    break;
+                case "Laminate":
+                    MaterialPrice = 100;
+                    break;
+                case "Pine":
+                    MaterialPrice = 50;
+                    break;
+                case "Rosewood":
+                    MaterialPrice = 300;
+                    break;
+                case "Veneer":
+                    MaterialPrice = 125;
+                    break;
+            }
+            return MaterialPrice;
+        }
 
-        //    return MaterialPrice();
+        private int RushDaysPrice()
+        {
+            int rushDays = this.RushDays;
+            int RushDaysPrice = 0;
+            if (Desk.surfaceArea > 0 && Desk.surfaceArea < 1000)
+            {
+                switch (rushDays)
+                {
+                    case 3: RushDaysPrice = extraCharges[0, 0]; break;
+                    case 5: RushDaysPrice = extraCharges[0, 1]; break;
+                    case 7: RushDaysPrice = extraCharges[0, 2]; break;
+                    default: RushDaysPrice = 0; break;
+                }
+            }
+            else if (Desk.surfaceArea >= 1000 && Desk.surfaceArea <= 2000)
+            {
+                switch (rushDays)
+                {
+                    case 3: RushDaysPrice = extraCharges[1, 0]; break;
+                    case 5: RushDaysPrice = extraCharges[1, 1]; break;
+                    case 7: RushDaysPrice = extraCharges[1, 2]; break;
+                    default: RushDaysPrice = 0; break;
+                }
+            }
+            else
+            {
+                switch (rushDays)
+                {
+                    case 3: RushDaysPrice = extraCharges[2, 0]; break;
+                    case 5: RushDaysPrice = extraCharges[2, 1]; break;
+                    case 7: RushDaysPrice = extraCharges[2, 2]; break;
+                    default: RushDaysPrice = 0; break;
+                }
+            }
+            return RushDaysPrice;
+        }
 
+        public int[,] GetRushOrder(string fileName)
+        {
 
-        //}
+            int[,] extraCharges = new int[3, 3];
 
-        //private int calcMaterialPrice(Desk.Material material)
-        //{
+            try
+            {
+                string[] lines = File.ReadAllLines(fileName);
 
-        //    switch (material)
-        //    {
-        //        case Desk.Material.Oak:
-        //            (int) MaterialPrice = 200;
-        //            break;
-        //        case Desk.Material.Laminate:
-        //            MaterialPrice = 100;
-        //            break;
-        //        case Desk.Material.Pine:
-        //            MaterialPrice = 50;
-        //            break;
-        //        case Desk.Material.Rosewood:
-        //            MaterialPrice = 300;
-        //            break;
-        //        case Desk.Material.Veneer:
-        //            MaterialPrice = 125;
-        //            break;
-        //    }
-        //    return MaterialPrice;
-        //}
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        extraCharges[i, j] = int.Parse(lines[j + (3 * i)]);
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                System.Windows.Forms.MessageBox.Show("There was a problem while trying to read the file" + e);
+            }
+            catch (NullReferenceException ne)
+            {
+                System.Windows.Forms.MessageBox.Show("Null point exception " + ne);
+            }
+
+            return extraCharges;
+        }
+
+        public List<DeskQuote> ReadJSONFile(string file)
+        {
+            StreamReader sr = new StreamReader(file);
+            List<DeskQuote> deskQuotes = new List<DeskQuote>();
+            string JSONString;
+
+            try
+            {
+                while (!sr.EndOfStream)
+                {
+                    JSONString = sr.ReadLine();
+                    DeskQuote deskQuote = new DeskQuote();
+                    deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
+                    deskQuotes.Add(deskQuote);
+                }
+            }
+            catch (IOException e)
+            {
+                System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
+            }
+
+            sr.Close();
+            return deskQuotes;
+        }
+
+        public void writeJSONFile(string file, AddQuote addQuote)
+        {
+            Desk = new Desk();
+
+            Desk.width = addQuote.getDeskDepth();
+            Desk.depth = addQuote.getDeskWidth();
+            Desk.surfaceArea = addQuote.getDeskDepth() * addQuote.getDeskWidth();
+            Desk.drawers = addQuote.getDeskDrawers();
+            Desk.deskMaterial = addQuote.getMaterial();
+
+            this.CustomerName = addQuote.getCustomerName();
+            this.RushDays = addQuote.getRushDays();
+
+            //this.CalcQuoteTotalPrice(Desk, addQuote);
+            //this.date = addQuote.getDate();
+            //addQuote.setSurfaceArea(Desk.surfaceArea);
+            //addQuote.setPrice(this.price);
+
+            try
+            {
+                StreamWriter sw = new StreamWriter(file, append: true);
+                string jsonString = JsonConvert.SerializeObject(this);
+                sw.WriteLine(jsonString);
+                sw.Close();
+            }
+            catch (IOException e)
+            {
+
+            }
+        }
+
+        public void SaveQuote(AddQuote addQuote)
+        {
+            writeJSONFile("Quotes.json", addQuote);
+        }
+
+        public List<DeskQuote> SearchQuotes(string file, string searchBy, SearchQuotes searchQuotes)
+        {
+            StreamReader sr = new StreamReader(file);
+            List<DeskQuote> deskQuotes = new List<DeskQuote>();
+            string JSONString;
+
+            try
+            {
+                while (!sr.EndOfStream)
+                {
+                    JSONString = sr.ReadLine();
+                    DeskQuote deskQuote = new DeskQuote();
+                    deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
+
+                    if (searchQuotes.getSearchBy().Equals("Customer"))
+                    {
+                        if (searchQuotes.getCriteria() == deskQuote.CustomerName)
+                        {
+                            deskQuotes.Add(deskQuote);
+                        }
+                    }
+                    else if (searchQuotes.getSearchBy().Equals("Material"))
+                    {
+                        if (searchQuotes.getCriteria() == deskQuote.Desk.deskMaterial)
+                        {
+                            deskQuotes.Add(deskQuote);
+                        }
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
+            }
+            sr.Close();
+            return deskQuotes;
+        }
+
     }
 }
+

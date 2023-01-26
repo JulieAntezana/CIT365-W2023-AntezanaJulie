@@ -40,12 +40,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.material = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.rushDays = new System.Windows.Forms.TextBox();
+            this.rushDaysOptions = new System.Windows.Forms.TextBox();
             this.TodayDate = new System.Windows.Forms.Label();
+            this.SaveQuote = new System.Windows.Forms.Button();
             this.ShowQuoteButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.currentDate = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.rushDays = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -137,12 +138,12 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Rush Days (3, 5, or 7)";
             // 
-            // rushDays
+            // rushDaysOptions
             // 
-            this.rushDays.Location = new System.Drawing.Point(178, 178);
-            this.rushDays.Name = "rushDays";
-            this.rushDays.Size = new System.Drawing.Size(155, 20);
-            this.rushDays.TabIndex = 6;
+            this.rushDaysOptions.Location = new System.Drawing.Point(178, 181);
+            this.rushDaysOptions.Name = "rushDaysOptions";
+            this.rushDaysOptions.Size = new System.Drawing.Size(155, 20);
+            this.rushDaysOptions.TabIndex = 6;
             // 
             // TodayDate
             // 
@@ -153,6 +154,16 @@
             this.TodayDate.Size = new System.Drawing.Size(0, 20);
             this.TodayDate.TabIndex = 15;
             // 
+            // SaveQuote
+            // 
+            this.SaveQuote.Location = new System.Drawing.Point(231, 222);
+            this.SaveQuote.Name = "SaveQuote";
+            this.SaveQuote.Size = new System.Drawing.Size(95, 23);
+            this.SaveQuote.TabIndex = 8;
+            this.SaveQuote.Text = "Save Quote";
+            this.SaveQuote.UseVisualStyleBackColor = true;
+            this.SaveQuote.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ShowQuoteButton
             // 
             this.ShowQuoteButton.Location = new System.Drawing.Point(47, 222);
@@ -162,16 +173,6 @@
             this.ShowQuoteButton.Text = "Show Quote";
             this.ShowQuoteButton.UseVisualStyleBackColor = true;
             this.ShowQuoteButton.Click += new System.EventHandler(this.ShowQuoteButton_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(231, 222);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Back to Main";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // currentDate
             // 
@@ -186,16 +187,32 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // rushDays
+            // 
+            this.rushDays.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rushDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rushDays.FormattingEnabled = true;
+            this.rushDays.Items.AddRange(new object[] {
+            "3",
+            "5",
+            "7"});
+            this.rushDays.Location = new System.Drawing.Point(423, 32);
+            this.rushDays.Name = "rushDays";
+            this.rushDays.Size = new System.Drawing.Size(137, 28);
+            this.rushDays.TabIndex = 0;
+            this.rushDays.SelectedIndexChanged += new System.EventHandler(this.rushDays_SelectedIndexChanged);
+            // 
             // AddQuote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(381, 264);
-            this.Controls.Add(this.currentDate);
-            this.Controls.Add(this.TodayDate);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.ShowQuoteButton);
             this.Controls.Add(this.rushDays);
+            this.Controls.Add(this.currentDate);
+            this.Controls.Add(this.SaveQuote);
+            this.Controls.Add(this.TodayDate);
+            this.Controls.Add(this.ShowQuoteButton);
+            this.Controls.Add(this.rushDaysOptions);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.material);
             this.Controls.Add(this.label5);
@@ -228,10 +245,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox material;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox rushDays;
+        private System.Windows.Forms.TextBox rushDaysOptions;
         private System.Windows.Forms.Button ShowQuoteButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button SaveQuote;
         private System.Windows.Forms.Label currentDate;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox rushDays;
     }
 }

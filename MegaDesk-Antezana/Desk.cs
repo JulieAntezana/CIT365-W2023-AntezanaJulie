@@ -13,7 +13,7 @@ namespace MegaDesk_Antezana
         public int depth { get; set; }
         public int drawers { get; set; }
         public int surfaceArea { get; set; }
-        public Material deskMaterial { get; set; }
+        public string deskMaterial { get; set; }
 
 
         // Constraints
@@ -21,17 +21,15 @@ namespace MegaDesk_Antezana
         public const int MAXWIDTH = 96;
         public const int MINDEPTH = 12;
         public const int MAXDEPTH = 48;
-
-        // Materials
-        public enum Material
-        {
-            Oak = 200,
-            Laminate = 100,
-            Pine = 50,
-            Rosewood = 300,
-            Veneer = 125
-        }
-
+    }
+    // Materials
+    public enum Material
+    {
+        Oak = 200,
+        Laminate = 100,
+        Pine = 50,
+        Rosewood = 300,
+        Veneer = 125
     }
 }
 
