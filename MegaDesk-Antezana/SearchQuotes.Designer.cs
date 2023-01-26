@@ -78,13 +78,13 @@
             // 
             // Search
             // 
-            this.Search.Location = new System.Drawing.Point(399, 261);
-            this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(108, 30);
-            this.Search.TabIndex = 8;
-            this.Search.Text = "Search";
-            this.Search.UseVisualStyleBackColor = true;
-            this.Search.Click += new System.EventHandler(this.Search_Click);
+            //this.Search.Location = new System.Drawing.Point(399, 261);
+            //this.Search.Name = "Search";
+            //this.Search.Size = new System.Drawing.Size(108, 30);
+            //this.Search.TabIndex = 8;
+            //this.Search.Text = "Search";
+            //this.Search.UseVisualStyleBackColor = true;
+            //this.Search.Click += new System.EventHandler(this.Search_Click);
             // 
             // Criteria
             // 

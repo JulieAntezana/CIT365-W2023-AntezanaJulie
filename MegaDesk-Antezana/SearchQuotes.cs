@@ -29,44 +29,6 @@ namespace MegaDesk_Antezana
         {
             return this.criteria = this.Criteria.Text;
         }
-
-        private void Search_Click(object sender, EventArgs e)
-        {
-            DeskQuote deskQuote = new DeskQuote();
-            List<DeskQuote> DeskQuotes = new List<DeskQuote>();
-
-            DeskQuotes = deskQuote.SearchQuotes("Quotes.json", this.searchBy, this);
-
-            this.Results.AppendText("Date" + "\t\t");
-            this.Results.AppendText("Client" + "\t");
-            this.Results.AppendText("Depth" + "\t");
-            this.Results.AppendText("Width" + "\t");
-            this.Results.AppendText("Sice" + "\t");
-            this.Results.AppendText("Material" + "\t\t");
-            this.Results.AppendText("Price" + "\n");
-
-            for (int i = 0; i < DeskQuotes.Count; i++)
-            {
-
-                this.Results.AppendText(DeskQuotes.ElementAt(i).CurrentDate + "\t");
-                this.Results.AppendText(DeskQuotes.ElementAt(i).CustomerName + "\t");
-                this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.width + "\t");
-                this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.depth + "\t");
-                this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.surfaceArea + "\t");
-                if (DeskQuotes.ElementAt(i).Desk.deskMaterial.Equals("Rosewood"))
-                {
-                    this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.deskMaterial + "\t");
-                }
-                else
-                {
-                    this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.deskMaterial + "\t\t");
-                }
-                this.Results.AppendText("$" + string.Format("{0:n0}", DeskQuotes.ElementAt(i).QuoteTotalPrice) + "\n");
-            }
-
-            this.Search.Enabled = false;
-        }
-
         private void MainMenuButton_Click(object sender, EventArgs e)
         {
             mainMenu.Show();
@@ -75,7 +37,40 @@ namespace MegaDesk_Antezana
 
         private void SearchComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+                DeskQuote deskQuote = new DeskQuote();
+                List<DeskQuote> DeskQuotes = new List<DeskQuote>();
 
+                DeskQuotes = deskQuote.SearchQuotes("Quotes.json", this.searchBy, this);
+
+                this.Results.AppendText("Date" + "\t\t");
+                this.Results.AppendText("Client" + "\t");
+                this.Results.AppendText("Depth" + "\t");
+                this.Results.AppendText("Width" + "\t");
+                this.Results.AppendText("Sice" + "\t");
+                this.Results.AppendText("Material" + "\t\t");
+                this.Results.AppendText("Price" + "\n");
+
+                for (int i = 0; i < DeskQuotes.Count; i++)
+                {
+
+                    this.Results.AppendText(DeskQuotes.ElementAt(i).TodayDate + "\t");
+                    this.Results.AppendText(DeskQuotes.ElementAt(i).CustomerName + "\t");
+                    this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.width + "\t");
+                    this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.depth + "\t");
+                    this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.surfaceArea + "\t");
+                    if (DeskQuotes.ElementAt(i).Desk.deskMaterial.Equals("Rosewood"))
+                    {
+                        this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.deskMaterial + "\t");
+                    }
+                    else
+                    {
+                        this.Results.AppendText(DeskQuotes.ElementAt(i).Desk.deskMaterial + "\t\t");
+                    }
+                    this.Results.AppendText("$" + string.Format("{0:n0}", DeskQuotes.ElementAt(i).QuoteTotalPrice) + "\n");
+                }
+
+                this.Search.Enabled = false;
+            
         }
     }
 }

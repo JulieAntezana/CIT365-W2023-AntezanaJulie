@@ -17,7 +17,6 @@ namespace MegaDesk_Antezana
         public string CustomerName;
         public Desk Desk = new Desk();
         public int RushDays;
-        public DateTime quoteDate;
         public int QuoteTotalPrice;
         public int[,] extraCharges = new int[3, 3];
 
@@ -27,8 +26,6 @@ namespace MegaDesk_Antezana
         private const int PRICE_PER_DRAWER = 50;
         private const int AREA_PRICE_PER_IN = 1;
         private const int RUSH_THRESHOLD = 2000;
-
-        public string CurrentDate { get; }
 
         public DeskQuote(DateTime quoteDate, string customerName, int width, int depth, int drawers, string material, int rushDays)
         {
@@ -41,6 +38,10 @@ namespace MegaDesk_Antezana
             RushDays = rushDays;
             Desk.surfaceArea = Desk.width * Desk.depth;
             CalcQuoteTotalPrice();
+        }
+
+        public DeskQuote()
+        {
         }
 
         public void CalcQuoteTotalPrice()
