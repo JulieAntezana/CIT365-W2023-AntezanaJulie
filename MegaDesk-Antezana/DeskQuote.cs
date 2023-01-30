@@ -7,6 +7,10 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Xml.Linq;
+using File = System.IO.File;
 
 namespace MegaDesk_Antezana
 {
@@ -18,7 +22,9 @@ namespace MegaDesk_Antezana
         public Desk Desk = new Desk();
         public int RushDays;
         public int QuoteTotalPrice;
-        public int[,] extraCharges = new int[3, 3];
+        public int DrawersPrice;
+        //public int MaterialPrice;
+        //public int RushDaysPrice;
 
         // Constraints
         private const int BASE_PRICE = 200;
@@ -37,17 +43,14 @@ namespace MegaDesk_Antezana
             Desk.deskMaterial = material;
             RushDays = rushDays;
             Desk.surfaceArea = Desk.width * Desk.depth;
-            CalcQuoteTotalPrice();
-        }
-
-        public DeskQuote()
-        {
+            //CalcDrawersPrice();
+            //CalcQuoteTotalPrice();
         }
 
         public void CalcQuoteTotalPrice()
         {
             // Calculate the quote total price for the desk
-            QuoteTotalPrice = (BASE_PRICE + SurfaceAreaPrice() + DrawersPrice() + MaterialPrice() + RushDaysPrice());
+            QuoteTotalPrice = (BASE_PRICE + SurfaceAreaPrice() + CalcDrawersPrice() + MaterialPrice() + RushDaysPrice());
         }
 
         private int SurfaceAreaPrice()
@@ -63,7 +66,7 @@ namespace MegaDesk_Antezana
             }
         }
 
-        private int DrawersPrice()
+        public int CalcDrawersPrice()
         {
             int DrawersPrice = Desk.drawers * PRICE_PER_DRAWER;
             return DrawersPrice;
@@ -103,9 +106,10 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
-                    case 3: RushDaysPrice = extraCharges[0, 0]; break;
-                    case 5: RushDaysPrice = extraCharges[0, 1]; break;
-                    case 7: RushDaysPrice = extraCharges[0, 2]; break;
+                    case 3: RushDaysPrice = 60; break;
+                    case 5: RushDaysPrice = 40; break;
+                    case 7: RushDaysPrice = 30; break;
+                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
@@ -113,9 +117,10 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
-                    case 3: RushDaysPrice = extraCharges[1, 0]; break;
-                    case 5: RushDaysPrice = extraCharges[1, 1]; break;
-                    case 7: RushDaysPrice = extraCharges[1, 2]; break;
+                    case 3: RushDaysPrice = 70; break;
+                    case 5: RushDaysPrice = 50; break;
+                    case 7: RushDaysPrice = 35; break;
+                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
@@ -123,64 +128,35 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
-                    case 3: RushDaysPrice = extraCharges[2, 0]; break;
-                    case 5: RushDaysPrice = extraCharges[2, 1]; break;
-                    case 7: RushDaysPrice = extraCharges[2, 2]; break;
+                    case 3: RushDaysPrice = 80; break;
+                    case 5: RushDaysPrice = 60; break;
+                    case 7: RushDaysPrice = 40; break;
+                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
             return RushDaysPrice;
         }
 
-        public int[,] GetRushOrder(string fileName)
+    public List<DeskQuote> ReadJSONFile(string file)
+    {
+        StreamReader sr = new StreamReader(file);
+        List<DeskQuote> deskQuotes = new List<DeskQuote>();
+        string JSONString;
+        try
         {
-
-            int[,] extraCharges = new int[3, 3];
-
-            try
+            while (!sr.EndOfStream)
             {
-                string[] lines = File.ReadAllLines(fileName);
-
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        extraCharges[i, j] = int.Parse(lines[j + (3 * i)]);
-                    }
-                }
+                JSONString = sr.ReadLine();
+                //DeskQuote deskQuote = new DeskQuote(DateTime quoteDate, string customerName, int width, int depth, int drawers, string material, int rushDays);
+                    DeskQuote deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
+                deskQuotes.Add(deskQuote);
             }
-            catch (IOException e)
-            {
-                System.Windows.Forms.MessageBox.Show("There was a problem while trying to read the file" + e);
-            }
-            catch (NullReferenceException ne)
-            {
-                System.Windows.Forms.MessageBox.Show("Null point exception " + ne);
-            }
-
-            return extraCharges;
         }
-
-        public List<DeskQuote> ReadJSONFile(string file)
+        catch (IOException e)
         {
-            StreamReader sr = new StreamReader(file);
-            List<DeskQuote> deskQuotes = new List<DeskQuote>();
-            string JSONString;
-
-            try
-            {
-                while (!sr.EndOfStream)
-                {
-                    JSONString = sr.ReadLine();
-                    DeskQuote deskQuote = new DeskQuote();
-                    deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
-                    deskQuotes.Add(deskQuote);
-                }
-            }
-            catch (IOException e)
-            {
-                System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
-            }
+            System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
+        }
 
             sr.Close();
             return deskQuotes;
@@ -233,8 +209,8 @@ namespace MegaDesk_Antezana
                 while (!sr.EndOfStream)
                 {
                     JSONString = sr.ReadLine();
-                    DeskQuote deskQuote = new DeskQuote();
-                    deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
+                    // DeskQuote deskQuote = new DeskQuote();
+                    DeskQuote deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
 
                     if (searchQuotes.getSearchBy().Equals("Customer"))
                     {

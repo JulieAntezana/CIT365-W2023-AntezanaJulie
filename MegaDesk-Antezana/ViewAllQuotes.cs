@@ -16,5 +16,12 @@ namespace MegaDesk_Antezana
         {
             InitializeComponent();
         }
+
+        private void MainMenuButton_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenuForm = new MainMenu();
+            mainMenuForm.Show();
+            this.Hide();
+        }
     }
 }

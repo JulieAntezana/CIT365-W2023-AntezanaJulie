@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddQuote));
             this.label1 = new System.Windows.Forms.Label();
             this.customerName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,17 +37,24 @@
             this.label3 = new System.Windows.Forms.Label();
             this.depth = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.drawers = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.material = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.rushDaysOptions = new System.Windows.Forms.TextBox();
             this.TodayDate = new System.Windows.Forms.Label();
-            this.SaveQuote = new System.Windows.Forms.Button();
+            this.MainMenuButton = new System.Windows.Forms.Button();
             this.ShowQuoteButton = new System.Windows.Forms.Button();
             this.currentDate = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.rushDays = new System.Windows.Forms.ComboBox();
+            this.RushDaysComboBox = new System.Windows.Forms.ComboBox();
+            this.drawers = new System.Windows.Forms.ComboBox();
+            this.material = new System.Windows.Forms.ComboBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider3 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -64,6 +72,7 @@
             this.customerName.Name = "customerName";
             this.customerName.Size = new System.Drawing.Size(155, 20);
             this.customerName.TabIndex = 1;
+            this.customerName.Validating += new System.ComponentModel.CancelEventHandler(this.customerName_Validating);
             // 
             // label2
             // 
@@ -77,9 +86,12 @@
             // width
             // 
             this.width.Location = new System.Drawing.Point(178, 74);
+            this.width.MaxLength = 2;
             this.width.Name = "width";
+            this.width.ShortcutsEnabled = false;
             this.width.Size = new System.Drawing.Size(155, 20);
             this.width.TabIndex = 2;
+            this.width.Validating += new System.ComponentModel.CancelEventHandler(this.width_Validating_1);
             // 
             // label3
             // 
@@ -94,8 +106,10 @@
             // 
             this.depth.Location = new System.Drawing.Point(178, 100);
             this.depth.Name = "depth";
+            this.depth.ShortcutsEnabled = false;
             this.depth.Size = new System.Drawing.Size(155, 20);
             this.depth.TabIndex = 3;
+            this.depth.Validating += new System.ComponentModel.CancelEventHandler(this.depth_Validating);
             // 
             // label4
             // 
@@ -106,13 +120,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Number of Drawers (0 - 7)";
             // 
-            // drawers
-            // 
-            this.drawers.Location = new System.Drawing.Point(178, 126);
-            this.drawers.Name = "drawers";
-            this.drawers.Size = new System.Drawing.Size(155, 20);
-            this.drawers.TabIndex = 4;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -122,28 +129,14 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Surface Material";
             // 
-            // material
-            // 
-            this.material.Location = new System.Drawing.Point(178, 152);
-            this.material.Name = "material";
-            this.material.Size = new System.Drawing.Size(155, 20);
-            this.material.TabIndex = 5;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(44, 181);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(110, 13);
+            this.label6.Size = new System.Drawing.Size(64, 13);
             this.label6.TabIndex = 0;
-            this.label6.Text = "Rush Days (3, 5, or 7)";
-            // 
-            // rushDaysOptions
-            // 
-            this.rushDaysOptions.Location = new System.Drawing.Point(178, 181);
-            this.rushDaysOptions.Name = "rushDaysOptions";
-            this.rushDaysOptions.Size = new System.Drawing.Size(155, 20);
-            this.rushDaysOptions.TabIndex = 6;
+            this.label6.Text = "Rush Order ";
             // 
             // TodayDate
             // 
@@ -154,15 +147,15 @@
             this.TodayDate.Size = new System.Drawing.Size(0, 20);
             this.TodayDate.TabIndex = 15;
             // 
-            // SaveQuote
+            // MainMenuButton
             // 
-            this.SaveQuote.Location = new System.Drawing.Point(231, 222);
-            this.SaveQuote.Name = "SaveQuote";
-            this.SaveQuote.Size = new System.Drawing.Size(95, 23);
-            this.SaveQuote.TabIndex = 8;
-            this.SaveQuote.Text = "Save Quote";
-            this.SaveQuote.UseVisualStyleBackColor = true;
-            this.SaveQuote.Click += new System.EventHandler(this.button1_Click);
+            this.MainMenuButton.Location = new System.Drawing.Point(231, 222);
+            this.MainMenuButton.Name = "MainMenuButton";
+            this.MainMenuButton.Size = new System.Drawing.Size(95, 23);
+            this.MainMenuButton.TabIndex = 8;
+            this.MainMenuButton.Text = "Main Menu";
+            this.MainMenuButton.UseVisualStyleBackColor = true;
+            this.MainMenuButton.Click += new System.EventHandler(this.MainMenuButton_Click);
             // 
             // ShowQuoteButton
             // 
@@ -202,21 +195,89 @@
             this.rushDays.TabIndex = 0;
             this.rushDays.SelectedIndexChanged += new System.EventHandler(this.rushDays_SelectedIndexChanged);
             // 
+            // RushDaysComboBox
+            // 
+            this.RushDaysComboBox.FormattingEnabled = true;
+            this.RushDaysComboBox.Items.AddRange(new object[] {
+            "3",
+            "5",
+            "7",
+            "14"});
+            this.RushDaysComboBox.Location = new System.Drawing.Point(178, 181);
+            this.RushDaysComboBox.Name = "RushDaysComboBox";
+            this.RushDaysComboBox.Size = new System.Drawing.Size(155, 21);
+            this.RushDaysComboBox.TabIndex = 6;
+            this.RushDaysComboBox.Text = "Select Number of Days";
+            // 
+            // drawers
+            // 
+            this.drawers.FormattingEnabled = true;
+            this.drawers.Items.AddRange(new object[] {
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0"});
+            this.drawers.Location = new System.Drawing.Point(178, 126);
+            this.drawers.Name = "drawers";
+            this.drawers.Size = new System.Drawing.Size(155, 21);
+            this.drawers.TabIndex = 4;
+            this.drawers.Text = "Select Number of Drawers";
+            // 
+            // material
+            // 
+            this.material.FormattingEnabled = true;
+            this.material.Items.AddRange(new object[] {
+            "Laminate",
+            "Oak",
+            "Pine",
+            "Rosewood",
+            "Veneer"});
+            this.material.Location = new System.Drawing.Point(178, 154);
+            this.material.Name = "material";
+            this.material.Size = new System.Drawing.Size(155, 21);
+            this.material.TabIndex = 5;
+            this.material.Text = "Select Surface Material";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            this.errorProvider1.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider1.Icon")));
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.ContainerControl = this;
+            this.errorProvider2.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider2.Icon")));
+            // 
+            // errorProvider3
+            // 
+            this.errorProvider3.ContainerControl = this;
+            this.errorProvider3.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider3.Icon")));
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "icons8-done-48.png");
+            // 
             // AddQuote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(381, 264);
+            this.Controls.Add(this.material);
+            this.Controls.Add(this.drawers);
+            this.Controls.Add(this.RushDaysComboBox);
             this.Controls.Add(this.rushDays);
             this.Controls.Add(this.currentDate);
-            this.Controls.Add(this.SaveQuote);
+            this.Controls.Add(this.MainMenuButton);
             this.Controls.Add(this.TodayDate);
             this.Controls.Add(this.ShowQuoteButton);
-            this.Controls.Add(this.rushDaysOptions);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.material);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.drawers);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.depth);
             this.Controls.Add(this.label3);
@@ -224,8 +285,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.customerName);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddQuote";
             this.Text = "AddQuote";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,15 +306,19 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox depth;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox drawers;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox material;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox rushDaysOptions;
         private System.Windows.Forms.Button ShowQuoteButton;
-        private System.Windows.Forms.Button SaveQuote;
+        private System.Windows.Forms.Button MainMenuButton;
         private System.Windows.Forms.Label currentDate;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox rushDays;
+        private System.Windows.Forms.ComboBox RushDaysComboBox;
+        private System.Windows.Forms.ComboBox drawers;
+        private System.Windows.Forms.ComboBox material;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider2;
+        private System.Windows.Forms.ErrorProvider errorProvider3;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

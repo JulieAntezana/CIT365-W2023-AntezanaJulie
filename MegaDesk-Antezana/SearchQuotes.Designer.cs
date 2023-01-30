@@ -66,7 +66,6 @@
             this.SearchComboBox.Name = "SearchComboBox";
             this.SearchComboBox.Size = new System.Drawing.Size(121, 21);
             this.SearchComboBox.TabIndex = 6;
-            this.SearchComboBox.SelectedIndexChanged += new System.EventHandler(this.SearchComboBox_SelectedIndexChanged);
             // 
             // Results
             // 
@@ -78,13 +77,11 @@
             // 
             // Search
             // 
-            //this.Search.Location = new System.Drawing.Point(399, 261);
-            //this.Search.Name = "Search";
-            //this.Search.Size = new System.Drawing.Size(108, 30);
-            //this.Search.TabIndex = 8;
-            //this.Search.Text = "Search";
-            //this.Search.UseVisualStyleBackColor = true;
-            //this.Search.Click += new System.EventHandler(this.Search_Click);
+            this.Search.Location = new System.Drawing.Point(373, 265);
+            this.Search.Name = "Search";
+            this.Search.Size = new System.Drawing.Size(75, 23);
+            this.Search.TabIndex = 4;
+            this.Search.Text = "Search";
             // 
             // Criteria
             // 

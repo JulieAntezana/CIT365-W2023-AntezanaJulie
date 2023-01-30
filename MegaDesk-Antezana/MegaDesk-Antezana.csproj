@@ -104,6 +104,9 @@
     <EmbeddedResource Include="SearchQuotes.resx">
       <DependentUpon>SearchQuotes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ViewAllQuotes.resx">
+      <DependentUpon>ViewAllQuotes.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="packages\Newtonsoft.Json.10.0.3\LICENSE.md" />
     <None Include="packages\Newtonsoft.Json.10.0.3\Newtonsoft.Json.10.0.3.nupkg" />
@@ -138,6 +141,7 @@
     <Content Include="packages\Newtonsoft.Json.10.0.3\lib\portable-net40+sl5+win8+wp8+wpa81\Newtonsoft.Json.xml" />
     <Content Include="packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll" />
     <Content Include="packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.xml" />
+    <Content Include="Properties\rushOrderPrices.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

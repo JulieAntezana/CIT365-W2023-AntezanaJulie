@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace MegaDesk_Antezana
@@ -24,7 +19,7 @@ namespace MegaDesk_Antezana
             mainMenu = mainMenuForm;
             // Set the current date on the form
             timer1.Start();
-            this.SaveQuote.Enabled = false;
+            //this.SaveQuote.Enabled = false;
         }
 
         private void ShowQuoteButton_Click(object sender, EventArgs e)
@@ -36,17 +31,18 @@ namespace MegaDesk_Antezana
             form.depth = depth.Text;
             form.drawers = drawers.Text;
             form.material = material.Text;
-            form.rushDays = rushDaysOptions.Text;
+            form.rushDays = RushDaysComboBox.Text;
             DeskQuote quote = new DeskQuote(DateTime.Parse(currentDate.Text), form.customerName, int.Parse(form.width), int.Parse(form.depth), int.Parse(form.drawers), form.material, int.Parse(form.rushDays));
+            form.DrawersPrice = $"{quote.DrawersPrice}";
             form.QuoteTotalPrice = $"{quote.QuoteTotalPrice}";
             form.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void MainMenuButton_Click(object sender, EventArgs e)
         {
             MainMenu mainMenuForm = new MainMenu();
             mainMenuForm.Show();
-            this.Close();
+            this.Hide();
         }
 
         public string getDate()
@@ -85,8 +81,7 @@ namespace MegaDesk_Antezana
 
         //private void SaveQuote_Click(object sender, EventArgs e)
         //{
-        //    DeskQuote quote = new DeskQuote);
-        //    deskQuote.saveQuote(this);
+        //    DeskQuote deskQuote.saveQuote(this);
         //    this.SaveQuote.Enabled = false;
         //    System.Windows.Forms.MessageBox.Show("The quote has been saved successfully");
         //}
@@ -97,11 +92,11 @@ namespace MegaDesk_Antezana
             if (this.customerName.Text != "" && this.depth.Text != "" && this.width.Text != ""
                 && this.drawers.Text != "" && this.rushDays.Text != "")
             {
-                this.SaveQuote.Enabled = true;
+                //this.SaveQuote.Enabled = true;
             }
         }
 
-        private void ClientName_TextChanged(object sender, EventArgs e)
+        private void CustomerName_TextChanged(object sender, EventArgs e)
         {
             checkFields();
         }
@@ -134,61 +129,6 @@ namespace MegaDesk_Antezana
         private void DeskSurface_TextChanged(object sender, EventArgs e)
         {
             checkFields();
-        }
-
-
-        public bool CheckWidth()
-        {
-
-            int width = Convert.ToInt32(this.width.Text);
-
-            if (width < MINWIDTH || width > MAXWIDTH)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-
-        }
-        private void Width_Validating(object sender, CancelEventArgs e)
-        {
-            bool result = CheckWidth();
-            string errorMessage = "Width not correct";
-
-            if (!result)
-            {
-                e.Cancel = true;
-                width.Select(0, width.Text.Length);
-                System.Windows.Forms.MessageBox.Show(errorMessage);
-            }
-        }
-
-        public bool CheckDepth()
-        {
-            int depth = Convert.ToInt32(this.depth.Text);
-
-            if (depth < MINDEPTH || depth > MAXDEPTH)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private void DeskDepth_Validating(object sender, CancelEventArgs e)
-        {
-            bool result = CheckDepth();
-            string errorMessage = "Depth not correct";
-
-            if (!result)
-            {
-                depth.Select(0, depth.Text.Length);
-                System.Windows.Forms.MessageBox.Show(errorMessage);
-            }
         }
 
         public string getMaterial()
@@ -245,6 +185,97 @@ namespace MegaDesk_Antezana
         public int getRushDays()
         {
             return Convert.ToInt32(this.rushDays.Text);
+        }
+
+        //private void width_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    if (char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) || (e.KeyChar) == (char)Keys.Back)
+        //    {
+        //        e.Handled = false;
+        //    }
+        //    else
+        //    {
+        //        e.Handled = true;
+        //        MessageBox.Show("Please enter a number between 24 and 96");
+        //    }
+        //}
+
+
+
+        private void width_Validating_1(object sender, CancelEventArgs e)
+        {
+            if (width.Text == string.Empty)
+            {
+                errorProvider1.SetError(width, "Please enter a number between 24 and 96");
+                errorProvider2.SetError(width, "");
+                errorProvider3.SetError(width, "");
+            }
+            else
+            {
+                Regex numberchk = new Regex(@"^([0-9]*|\d*)$");
+                if (numberchk.IsMatch(width.Text) && int.Parse(width.Text) >= MINWIDTH && int.Parse(width.Text) <= MAXWIDTH)
+                {
+                    errorProvider1.SetError(width, "");
+                    errorProvider2.SetError(width, "");
+                    errorProvider3.SetError(width, "You entered a number between 24 and 96");
+                }
+                else
+                {
+                    errorProvider1.SetError(width, "");
+                    errorProvider2.SetError(width, "Please enter a number between 24 and 96");
+                    errorProvider3.SetError(width, "");
+                }
+            }
+        }
+
+        private void depth_Validating(object sender, CancelEventArgs e)
+        {
+            if (depth.Text == string.Empty)
+            {
+                errorProvider1.SetError(depth, "Please enter a number between 12 and 48");
+                errorProvider2.SetError(depth, "");
+                errorProvider3.SetError(depth, "");
+            }
+            else
+            {
+                Regex numberchk = new Regex(@"^([0-9]*|\d*)$");
+                if (numberchk.IsMatch(depth.Text) && int.Parse(depth.Text) >= MINDEPTH && int.Parse(depth.Text) <= MAXDEPTH)
+                {
+                    errorProvider1.SetError(depth, "");
+                    errorProvider2.SetError(depth, "");
+                    errorProvider3.SetError(depth, "You entered a number between 12 and 48");
+                }
+                else
+                {
+                    errorProvider1.SetError(depth, "");
+                    errorProvider2.SetError(depth, "Please enter a number between 12 and 48");
+                    errorProvider3.SetError(depth, "");
+                }
+            }
+        }
+
+        private void customerName_Validating(object sender, CancelEventArgs e)
+        {
+            if (customerName.Text == string.Empty)
+            {
+                errorProvider1.SetError(customerName, "Please enter name");
+                errorProvider2.SetError(customerName, "");
+                errorProvider3.SetError(customerName, "");
+            }
+            else
+                if (!Regex.IsMatch(customerName.Text, @"[\p{L} ]+$"))
+                {
+                errorProvider1.SetError(customerName, "Please enter name with letters");
+                errorProvider2.SetError(customerName, "");
+                errorProvider3.SetError(customerName, "");
+            }
+
+            else
+            {
+                errorProvider1.SetError(customerName, "");
+                errorProvider2.SetError(customerName, "");
+                errorProvider3.SetError(customerName, "You entered a name");
+            }
         }
     }
 }

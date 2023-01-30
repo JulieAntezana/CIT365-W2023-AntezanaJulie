@@ -41,7 +41,7 @@
             this.MainMenuButton.TabIndex = 6;
             this.MainMenuButton.Text = "Main Menu";
             this.MainMenuButton.UseVisualStyleBackColor = true;
-            //this.MainMenuButton.Click += new System.EventHandler(this.MainMenuButton_Click);
+            this.MainMenuButton.Click += new System.EventHandler(this.MainMenuButton_Click);
             // 
             // Results
             // 
@@ -59,7 +59,6 @@
             this.Search.TabIndex = 8;
             this.Search.Text = "Search";
             this.Search.UseVisualStyleBackColor = true;
-            //this.Search.Click += new System.EventHandler(this.Search_Click);
             // 
             // ViewAllQuotes
             // 
