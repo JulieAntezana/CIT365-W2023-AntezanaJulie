@@ -22,9 +22,6 @@ namespace MegaDesk_Antezana
         public Desk Desk = new Desk();
         public int RushDays;
         public int QuoteTotalPrice;
-        public int DrawersPrice;
-        //public int MaterialPrice;
-        //public int RushDaysPrice;
 
         // Constraints
         private const int BASE_PRICE = 200;
@@ -43,8 +40,7 @@ namespace MegaDesk_Antezana
             Desk.deskMaterial = material;
             RushDays = rushDays;
             Desk.surfaceArea = Desk.width * Desk.depth;
-            //CalcDrawersPrice();
-            //CalcQuoteTotalPrice();
+            CalcQuoteTotalPrice();
         }
 
         public void CalcQuoteTotalPrice()
@@ -106,10 +102,10 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
+                    case 0: RushDaysPrice = 0; break;
                     case 3: RushDaysPrice = 60; break;
                     case 5: RushDaysPrice = 40; break;
                     case 7: RushDaysPrice = 30; break;
-                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
@@ -117,10 +113,9 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
+                    case 0: RushDaysPrice = 0; break;
                     case 3: RushDaysPrice = 70; break;
                     case 5: RushDaysPrice = 50; break;
-                    case 7: RushDaysPrice = 35; break;
-                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
@@ -128,114 +123,15 @@ namespace MegaDesk_Antezana
             {
                 switch (rushDays)
                 {
+                    case 0: RushDaysPrice = 0; break;
                     case 3: RushDaysPrice = 80; break;
                     case 5: RushDaysPrice = 60; break;
                     case 7: RushDaysPrice = 40; break;
-                    case 14: RushDaysPrice = 0; break;
                     default: RushDaysPrice = 0; break;
                 }
             }
             return RushDaysPrice;
         }
-
-    public List<DeskQuote> ReadJSONFile(string file)
-    {
-        StreamReader sr = new StreamReader(file);
-        List<DeskQuote> deskQuotes = new List<DeskQuote>();
-        string JSONString;
-        try
-        {
-            while (!sr.EndOfStream)
-            {
-                JSONString = sr.ReadLine();
-                //DeskQuote deskQuote = new DeskQuote(DateTime quoteDate, string customerName, int width, int depth, int drawers, string material, int rushDays);
-                    DeskQuote deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
-                deskQuotes.Add(deskQuote);
-            }
-        }
-        catch (IOException e)
-        {
-            System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
-        }
-
-            sr.Close();
-            return deskQuotes;
-        }
-
-        public void writeJSONFile(string file, AddQuote addQuote)
-        {
-            Desk = new Desk();
-
-            Desk.width = addQuote.getDeskDepth();
-            Desk.depth = addQuote.getDeskWidth();
-            Desk.surfaceArea = addQuote.getDeskDepth() * addQuote.getDeskWidth();
-            Desk.drawers = addQuote.getDeskDrawers();
-            Desk.deskMaterial = addQuote.getMaterial();
-
-            this.CustomerName = addQuote.getCustomerName();
-            this.RushDays = addQuote.getRushDays();
-
-            //this.CalcQuoteTotalPrice(Desk, addQuote);
-            //this.date = addQuote.getDate();
-            //addQuote.setSurfaceArea(Desk.surfaceArea);
-            //addQuote.setPrice(this.price);
-
-            try
-            {
-                StreamWriter sw = new StreamWriter(file, append: true);
-                string jsonString = JsonConvert.SerializeObject(this);
-                sw.WriteLine(jsonString);
-                sw.Close();
-            }
-            catch (IOException e)
-            {
-
-            }
-        }
-
-        public void SaveQuote(AddQuote addQuote)
-        {
-            writeJSONFile("Quotes.json", addQuote);
-        }
-
-        public List<DeskQuote> SearchQuotes(string file, string searchBy, SearchQuotes searchQuotes)
-        {
-            StreamReader sr = new StreamReader(file);
-            List<DeskQuote> deskQuotes = new List<DeskQuote>();
-            string JSONString;
-
-            try
-            {
-                while (!sr.EndOfStream)
-                {
-                    JSONString = sr.ReadLine();
-                    // DeskQuote deskQuote = new DeskQuote();
-                    DeskQuote deskQuote = JsonConvert.DeserializeObject<DeskQuote>(JSONString);
-
-                    if (searchQuotes.getSearchBy().Equals("Customer"))
-                    {
-                        if (searchQuotes.getCriteria() == deskQuote.CustomerName)
-                        {
-                            deskQuotes.Add(deskQuote);
-                        }
-                    }
-                    else if (searchQuotes.getSearchBy().Equals("Material"))
-                    {
-                        if (searchQuotes.getCriteria() == deskQuote.Desk.deskMaterial)
-                        {
-                            deskQuotes.Add(deskQuote);
-                        }
-                    }
-                }
-            }
-            catch (IOException e)
-            {
-                System.Windows.Forms.MessageBox.Show("There was a problem trying to read the file" + e);
-            }
-            sr.Close();
-            return deskQuotes;
-        }
-
     }
 }
 

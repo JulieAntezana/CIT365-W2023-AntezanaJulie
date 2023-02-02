@@ -33,7 +33,6 @@ namespace MegaDesk_Antezana
             form.material = material.Text;
             form.rushDays = RushDaysComboBox.Text;
             DeskQuote quote = new DeskQuote(DateTime.Parse(currentDate.Text), form.customerName, int.Parse(form.width), int.Parse(form.depth), int.Parse(form.drawers), form.material, int.Parse(form.rushDays));
-            form.DrawersPrice = $"{quote.DrawersPrice}";
             form.QuoteTotalPrice = $"{quote.QuoteTotalPrice}";
             form.ShowDialog();
         }
@@ -45,20 +44,20 @@ namespace MegaDesk_Antezana
             this.Hide();
         }
 
-        public string getDate()
-        {
-            return this.TodayDate.Text;
-        }
+        //public string getDate()
+        //{
+        //    return this.TodayDate.Text;
+        //}
 
-        public void setDate(string date)
-        {
-            this.TodayDate.Text = date;
-        }
+        //public void setDate(string date)
+        //{
+        //    this.TodayDate.Text = date;
+        //}
 
-        private void AddQuote_Load(object sender, EventArgs e)
-        {
-            currentDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
-        }
+        //private void AddQuote_Load(object sender, EventArgs e)
+        //{
+        //    currentDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
+        //}
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -66,70 +65,49 @@ namespace MegaDesk_Antezana
             currentDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
         }
 
-
-
-        //public void setSurfaceArea(int size)
+        //public void checkFields()
         //{
-        //    this.s.Text = string.Format("{0:n0}", size.ToString());
+        //    if (this.customerName.Text != "" && this.depth.Text != "" && this.width.Text != ""
+        //        && this.drawers.Text != "" && this.rushDays.Text != "")
+        //    {
+        //        //this.SaveQuote.Enabled = true;
+        //    }
         //}
 
-        //public void setPrice(int price)
+        //private void CustomerName_TextChanged(object sender, EventArgs e)
         //{
-        //    DeskQuote.quote.QuoteTotalPrice.Text = "$" + string.Format("{0:n0}", price.ToString());
+        //    checkFields();
         //}
 
-
-        //private void SaveQuote_Click(object sender, EventArgs e)
+        //private void DeskWidth_TextChanged(object sender, EventArgs e)
         //{
-        //    DeskQuote deskQuote.saveQuote(this);
-        //    this.SaveQuote.Enabled = false;
-        //    System.Windows.Forms.MessageBox.Show("The quote has been saved successfully");
+        //    checkFields();
         //}
 
+        //private void DeskDepth_TextChanged(object sender, EventArgs e)
+        //{
+        //    checkFields();
+        //}
 
-        public void checkFields()
-        {
-            if (this.customerName.Text != "" && this.depth.Text != "" && this.width.Text != ""
-                && this.drawers.Text != "" && this.rushDays.Text != "")
-            {
-                //this.SaveQuote.Enabled = true;
-            }
-        }
+        //private void rushDays_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    checkFields();
+        //}
 
-        private void CustomerName_TextChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
+        //private void Material_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    checkFields();
+        //}
 
-        private void DeskWidth_TextChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
+        //private void DeskDrawers_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    checkFields();
+        //}
 
-        private void DeskDepth_TextChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
-
-        private void rushDays_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
-
-        private void Material_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
-
-        private void DeskDrawers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
-
-        private void DeskSurface_TextChanged(object sender, EventArgs e)
-        {
-            checkFields();
-        }
+        //private void DeskSurface_TextChanged(object sender, EventArgs e)
+        //{
+        //    checkFields();
+        //}
 
         public string getMaterial()
         {
@@ -162,46 +140,30 @@ namespace MegaDesk_Antezana
             return MaterialPrice;
         }
 
-        public int getDeskWidth()
-        {
-            return Convert.ToInt32(this.width.Text);
-        }
-
-        public int getDeskDepth()
-        {
-            return Convert.ToInt32(this.depth.Text);
-        }
-
-        public int getDeskDrawers()
-        {
-            return Convert.ToInt32(this.drawers.Text);
-        }
-
-        public String getCustomerName()
-        {
-            return this.customerName.Text;
-        }
-
-        public int getRushDays()
-        {
-            return Convert.ToInt32(this.rushDays.Text);
-        }
-
-        //private void width_KeyPress(object sender, KeyPressEventArgs e)
+        //public int getDeskWidth()
         //{
-        //    if (char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) || (e.KeyChar) == (char)Keys.Back)
-        //    {
-        //        e.Handled = false;
-        //    }
-        //    else
-        //    {
-        //        e.Handled = true;
-        //        MessageBox.Show("Please enter a number between 24 and 96");
-        //    }
+        //    return Convert.ToInt32(this.width.Text);
         //}
 
+        //public int getDeskDepth()
+        //{
+        //    return Convert.ToInt32(this.depth.Text);
+        //}
 
+        //public int getDeskDrawers()
+        //{
+        //    return Convert.ToInt32(this.drawers.Text);
+        //}
 
+        //public String getCustomerName()
+        //{
+        //    return this.customerName.Text;
+        //}
+
+        //public int getRushDays()
+        //{
+        //    return Convert.ToInt32(this.rushDays.Text);
+        //}
         private void width_Validating_1(object sender, CancelEventArgs e)
         {
             if (width.Text == string.Empty)

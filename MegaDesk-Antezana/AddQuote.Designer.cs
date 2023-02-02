@@ -193,16 +193,15 @@
             this.rushDays.Name = "rushDays";
             this.rushDays.Size = new System.Drawing.Size(137, 28);
             this.rushDays.TabIndex = 0;
-            this.rushDays.SelectedIndexChanged += new System.EventHandler(this.rushDays_SelectedIndexChanged);
             // 
             // RushDaysComboBox
             // 
             this.RushDaysComboBox.FormattingEnabled = true;
             this.RushDaysComboBox.Items.AddRange(new object[] {
+            "0",
             "3",
             "5",
-            "7",
-            "14"});
+            "7"});
             this.RushDaysComboBox.Location = new System.Drawing.Point(178, 181);
             this.RushDaysComboBox.Name = "RushDaysComboBox";
             this.RushDaysComboBox.Size = new System.Drawing.Size(155, 21);

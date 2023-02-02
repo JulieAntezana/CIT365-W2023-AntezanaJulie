@@ -39,11 +39,8 @@ namespace MegaDesk_Antezana
             label8.Text = width;
             label9.Text = depth;
             label10.Text = drawers;
-            label2.Text = "$ " + DrawersPrice;
             label11.Text = material;
-            label4.Text = "$ " + MaterialPrice;
             label12.Text = rushDays;
-            label6.Text = "$ " + RushDaysPrice;
             label18.Text = "$ " + QuoteTotalPrice;
         }
 
@@ -61,9 +58,6 @@ namespace MegaDesk_Antezana
 
         private void SaveQuoteButton_Click(object sender, EventArgs e)
         {
-            //SaveQuote = saveQuote;
-            //DeskQuote deskQuote.saveQuote(this);
-            //this.SaveQuote.Enabled = false;
             System.Windows.Forms.MessageBox.Show("The quote has been saved successfully");
         }
     }
