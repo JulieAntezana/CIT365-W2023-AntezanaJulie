@@ -35,6 +35,6 @@ namespace RpScripture.Models
         public string? Notes { get; set; }
         [Display(Name = "Entry Date")]
         [DataType(DataType.Date)]
-        public DateTime EntryDate { get; set; }
+        public DateTime EntryDate { get; set; } 
     }
 }
