@@ -12,8 +12,8 @@ using MvcMovie.Data;
 namespace MvcMovie.Migrations
 {
     [DbContext(typeof(MvcMovieContext))]
-    [Migration("20230305041931_show")]
-    partial class show
+    [Migration("20230305111834_show2")]
+    partial class show2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,9 +38,6 @@ namespace MvcMovie.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("imagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
@@ -56,6 +53,9 @@ namespace MvcMovie.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("imagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -35,6 +35,5 @@ public class Movie
 
 
     [Display(Name = "Image Path"), DataType(DataType.ImageUrl)]
-    [UrlAttribute()]
     public string? imagePath { get; set; }  
 }
