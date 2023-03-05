@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.Net.WebRequestMethods;
 
 namespace MvcMovie.Models;
 
@@ -31,5 +32,9 @@ public class Movie
     [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$"), StringLength(9)]
     [Required(ErrorMessage = "Rating is required")]
     public string? Rating { get; set; }
-    public string? Photo { get; set; }  
+
+
+    [Display(Name = "Image Path"), DataType(DataType.ImageUrl)]
+    [UrlAttribute()]
+    public string? imagePath { get; set; }  
 }
