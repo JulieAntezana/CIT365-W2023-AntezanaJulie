@@ -26,8 +26,11 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">@Html.DisplayNameFor(model => model.Movies![0].Title)</a>
+                @Html.DisplayNameFor(model => model.Movies![0].Title)
             </th>
+@*            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">@Html.DisplayNameFor(model => model.Movies![0].Title)</a>
+            </th>*@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)</a>
             </th>

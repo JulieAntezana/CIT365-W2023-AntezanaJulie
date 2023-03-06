@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace MvcMovie.Controllers
 {
@@ -35,7 +43,7 @@ namespace MvcMovie.Controllers
                 movies = movies.Where(s => s.Title!.Contains(searchString));
             }
 
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            //ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             //var movies = from s in _context.Movie
             //             select s;
@@ -100,15 +108,15 @@ namespace MvcMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Price,Genre,Rating,imagePath")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Price,Genre,Rating,IMDB_ID")] Movie movie)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(movie);                  
         }
 
         // GET: Movies/Edit/5
@@ -132,7 +140,7 @@ namespace MvcMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Price,Genre,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Price,Genre,Rating,IMDB_ID")] Movie movie)
         {
             if (id != movie.Id)
             {

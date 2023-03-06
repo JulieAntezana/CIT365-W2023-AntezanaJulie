@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Http;
 
 namespace MvcMovie.Models;
 
@@ -14,10 +15,9 @@ public class Movie
     
 
     [Display(Name = "Release Date"), DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     [Required(ErrorMessage = "Release date is required")]
     public DateTime ReleaseDate { get; set; }
-
-
 
     [Range(1, 100), DataType(DataType.Currency)]
     [Column(TypeName = "decimal(18, 2)")]
@@ -34,6 +34,6 @@ public class Movie
     public string? Rating { get; set; }
 
 
-    [Display(Name = "Image Path"), DataType(DataType.ImageUrl)]
-    public string? imagePath { get; set; }  
+    [Display(Name = "IMDB ID")]
+    public string? IMDB_ID { get; set; }
 }
