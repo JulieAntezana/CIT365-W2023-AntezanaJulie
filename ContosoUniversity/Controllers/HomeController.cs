@@ -1,4 +1,5 @@
-﻿using ContosoUniversity.Models;
+﻿using ContosoUniversity.Data;
+using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,10 +7,12 @@ namespace ContosoUniversity.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SchoolContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SchoolContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
 

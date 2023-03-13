@@ -23,7 +23,7 @@ namespace ContosoUniversity.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Students != null ? 
-                          View(await _context.Students.ToListAsync()) :
+                          View(await _context.Students.Take(10).ToListAsync()) :
                           Problem("Entity set 'SchoolContext.Students'  is null.");
         }
 
@@ -36,6 +36,9 @@ namespace ContosoUniversity.Controllers
             }
 
             var student = await _context.Students
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (student == null)
             {
@@ -56,13 +59,24 @@ namespace ContosoUniversity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,LastName,FirstMidName,EnrollmentDate")] Student student)
+        public async Task<IActionResult> Create(
+            [Bind("EnrollmentDate,FirstMidName,LastName")] Student student)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(student);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
             }
             return View(student);
         }
